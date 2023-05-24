@@ -33,21 +33,21 @@ int main(void)
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		}
-		//  else if (strcmp(command, DEL_D) == 0) {
-		// 	number = strtok(NULL, DELIM);
-		// 	index_d = string_to_int(number);
+		} else if (strcmp(command, DEL_D) == 0) {
+			number = strtok(NULL, DELIM);
+			index_d = string_to_int(number);
 
-		// 	if (strtok(NULL, DELIM) == NULL) {
-		// 		del_deck(index_d, decks);
-		// 	} else {
-		// 		printf(INVALID_COMMAND);
-		// 	}
-		// } else if (strcmp(command, DEL_C) == 0) {
-		// 	number = strtok(NULL, DELIM);
-		// 	index_d = string_to_int(number);
-		// 	number = strtok(NULL, DELIM);
-		// 	index_c = string_to_int(number);
+			if (strtok(NULL, DELIM) == NULL) {
+				del_deck(index_d, decks);
+			} else {
+				printf(INVALID_COMMAND);
+			}
+		}
+		// else if (strcmp(command, DEL_C) == 0) {
+		//  	number = strtok(NULL, DELIM);
+		//  	index_d = string_to_int(number);
+		//  	number = strtok(NULL, DELIM);
+		//  	index_c = string_to_int(number);
 
 		// 	if (strtok(NULL, DELIM) == NULL) {
 		// 		del_card(index_d, index_c, decks);
@@ -99,16 +99,16 @@ int main(void)
 			} else {
 				printf(INVALID_COMMAND);
 			}
+		} else if (strcmp(command, SHOW_ALL) == 0) {
+			if (strtok(NULL, DELIM) == NULL) {
+				show_all(decks);
+			} else {
+				printf(INVALID_COMMAND);
+			}
 		}
-		//  else if (strcmp(command, SHOW_ALL) == 0) {
-		// 	if (strtok(NULL, DELIM) == NULL) {
-		// 		show_all(decks);
-		// 	} else {
-		// 		printf(INVALID_COMMAND);
-		// 	}
-		// } else if (strcmp(command, REVERSE_D) == 0) {
-		// 	number = strtok(NULL, DELIM);
-		// 	index_d = string_to_int(number);
+		// else if (strcmp(command, REVERSE_D) == 0) {
+		//  	number = strtok(NULL, DELIM);
+		//  	index_d = string_to_int(number);
 
 		// 	if (strtok(NULL, DELIM) == NULL) {
 		// 		reverse_deck(index_d, decks);
@@ -145,6 +145,6 @@ int main(void)
 		}
 	}
 
-	//free_decks(decks);
+	// free_decks(decks);
 	return 0;
 }

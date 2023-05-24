@@ -15,4 +15,8 @@ void add_deck(unsigned int num_cards, linked_list_t *decks);
 
 void show_deck(unsigned int index_d, linked_list_t *decks);
 
+void show_all(linked_list_t *decks);
+
+void del_deck(unsigned int index_d, linked_list_t *decks);
+
 #endif	// CARDS_H_

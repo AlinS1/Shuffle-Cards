@@ -60,3 +60,27 @@ void show_deck(unsigned int index_d, linked_list_t *decks)
 		printf("\t%d %s\n", my_card->value, my_card->symbol);
 	}
 }
+
+void show_all(linked_list_t *decks)
+{
+	unsigned int i;
+	for (i = 0; i < list_get_size(decks); i++) {
+		show_deck(i, decks);
+	}
+}
+
+void del_deck(unsigned int index_d, linked_list_t *decks)
+{
+	// verific indexul
+	if (index_d >= list_get_size(decks)) {
+		printf(DECK_INDEX_OUT_OF_BOUNDS);
+		return;
+	}
+	// sterg nodul la care se afla deck
+	node_t *node_d = list_remove_nth_node(decks, index_d);
+	linked_list_t *deck = (linked_list_t *)node_d->data;
+	// eliberez memoria
+	list_free(&deck);
+	free(node_d);
+	printf(REMOVED_DECK, index_d);
+}
