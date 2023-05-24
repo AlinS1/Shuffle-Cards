@@ -42,8 +42,7 @@ int main(void)
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		}
-		else if (strcmp(command, DEL_C) == 0) {
+		} else if (strcmp(command, DEL_C) == 0) {
 			number = strtok(NULL, DELIM);
 			index_d = string_to_int(number);
 			number = strtok(NULL, DELIM);
@@ -65,13 +64,13 @@ int main(void)
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} /*else if (strcmp(command, DECK_NUMBER) == 0) {
+		} else if (strcmp(command, DECK_NUMBER) == 0) {
 			if (strtok(NULL, DELIM) == NULL) {
 				deck_number(decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		}*/ else if (strcmp(command, DECK_LEN) == 0) {
+		} else if (strcmp(command, DECK_LEN) == 0) {
 			number = strtok(NULL, DELIM);
 			index_d = string_to_int(number);
 
@@ -80,7 +79,7 @@ int main(void)
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} /*else if (strcmp(command, SHUFFLE) == 0) {
+		} else if (strcmp(command, SHUFFLE) == 0) {
 			number = strtok(NULL, DELIM);
 			index_d = string_to_int(number);
 
@@ -89,7 +88,7 @@ int main(void)
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		}*/
+		}
 
 		else if (strcmp(command, SHOW_D) == 0) {
 			number = strtok(NULL, DELIM);
@@ -106,8 +105,7 @@ int main(void)
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		}
-		else if (strcmp(command, REVERSE_D) == 0) {
+		} else if (strcmp(command, REVERSE_D) == 0) {
 			number = strtok(NULL, DELIM);
 			index_d = string_to_int(number);
 

@@ -84,6 +84,7 @@ void del_deck(unsigned int index_d, linked_list_t *decks)
 	free(node_d);
 	printf(REMOVED_DECK, index_d);
 }
+
 void deck_len(unsigned int index_d, linked_list_t *decks) {
 	if (index_d >= list_get_size(decks)) {
 		printf(DECK_INDEX_OUT_OF_BOUNDS);
@@ -309,3 +310,38 @@ void split_deck(unsigned int index_d, unsigned int index_split,
 
 	printf(SPLIT, index_d, index_split);
 }
+
+void deck_number(linked_list_t *decks)
+{
+	printf(DECKS_NUM, list_get_size(decks));
+}
+
+void shuffle_deck(unsigned int index_d, linked_list_t *decks)
+{
+	if (index_d >= list_get_size(decks)) {
+		printf(DECK_INDEX_OUT_OF_BOUNDS);
+		return;
+	}
+
+	node_t *node_d = list_get_nth_node(decks, index_d);
+	linked_list_t *deck = (linked_list_t *)node_d->data;
+	if (list_get_size(deck) == 1) {
+		printf(SHUFFLED, index_d);
+		return;
+	}
+
+	// iau noul tail, adica ultimul element din prima jumatate
+	node_t *new_tail = list_get_nth_node(deck, list_get_size(deck) / 2 - 1);
+	node_t *new_head = new_tail->next;
+
+	// schimb legaturile
+	deck->tail->next = deck->head;
+	deck->head->prev = deck->tail;
+	new_head->prev = NULL;
+	new_tail->next = NULL;
+	deck->head = new_head;
+	deck->tail = new_tail;
+
+	printf(SHUFFLED, index_d);
+}
+
