@@ -25,13 +25,17 @@ int main(void)
 		// pentru comanda ADD_D
 		if (strcmp(command, ADD_D) == 0) {
 			number = strtok(NULL, DELIM);
-			num_cards = string_to_int(number);
-			// daca e null se apeleaza functia
-			// daca nu se afisaza eroare
-			if (strtok(NULL, DELIM) == NULL) {
-				add_deck(num_cards, decks);
-			} else {
-				printf(INVALID_COMMAND);
+			if (!number)
+				add_full_deck(56, decks);
+			else {
+				num_cards = string_to_int(number);
+				// daca e null se apeleaza functia
+				// daca nu se afisaza eroare
+				if (strtok(NULL, DELIM) == NULL) {
+					add_deck(num_cards, decks);
+				} else {
+					printf(INVALID_COMMAND);
+				}
 			}
 		} else if (strcmp(command, DEL_D) == 0) {
 			number = strtok(NULL, DELIM);
@@ -145,6 +149,6 @@ int main(void)
 		}
 	}
 
-	// free_decks(decks);
+	free_decks(decks);
 	return 0;
 }

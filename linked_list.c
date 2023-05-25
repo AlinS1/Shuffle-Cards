@@ -1,5 +1,6 @@
 
 #include "linked_list.h"
+#include "utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +11,7 @@
 linked_list_t *list_create(unsigned int data_size)
 {
 	linked_list_t *list = (linked_list_t *)malloc(sizeof(linked_list_t));
+	DIE(!list, "malloc failed");
 	list->head = NULL;
 	list->tail = NULL;
 	list->data_size = data_size;
@@ -46,7 +48,9 @@ void list_add_nth_node(linked_list_t *list, unsigned int n, const void *data)
 		n = list->size;
 
 	node_t *tmp = (node_t *)malloc(sizeof(node_t));
+	DIE(!tmp, "malloc failed");
 	tmp->data = malloc(list->data_size);
+	DIE(!tmp->data, "malloc failed");
 	memcpy(tmp->data, data, list->data_size);
 	tmp->next = NULL;
 	tmp->prev = NULL;

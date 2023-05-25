@@ -7,6 +7,48 @@
 #include "linked_list.h"
 #include "utils.h"
 
+void add_full_deck(unsigned int num_cards, linked_list_t *decks)
+{
+	unsigned int i = 0;
+	int r, value;
+	char line[BUF_SIZE], *symbol, *number;
+	linked_list_t *deck = list_create(sizeof(card_t));
+	card_t *my_card;
+	FILE *in = fopen("basic_deck_of_cards.txt", "rt");
+	if (!in) {
+		printf("Can't open file with cards\n");
+	}
+
+	while (i < num_cards) {
+		// citeste linia din fisierul in care se afla toate cartile dintr-un
+		// pachet normal de carti
+		fgets(line, BUF_SIZE, in);
+		number = strtok(line, DELIM);
+		// pentru ca fgets returneaza un string il transform in int
+		value = string_to_int(number);
+		symbol = strtok(NULL, DELIM);
+
+		r = check_card(value, symbol);
+		// daca cartea nu e buna -> eroare
+		if (r == 0) {
+			printf(INVALID_CARD);
+		} else {
+			my_card = (card_t *)calloc(1, sizeof(card_t));
+			my_card->value = value;
+			strcpy(my_card->symbol, symbol);
+
+			list_add_nth_node(deck, list_get_size(deck), my_card);
+			free(my_card);
+			i++;
+		}
+	}
+
+	list_add_nth_node(decks, list_get_size(decks), deck);
+	free(deck);
+	printf(ADDED_DECK, num_cards);
+	fclose(in);
+}
+
 void add_deck(unsigned int num_cards, linked_list_t *decks)
 {
 	unsigned int i = 0;
@@ -85,7 +127,8 @@ void del_deck(unsigned int index_d, linked_list_t *decks)
 	printf(REMOVED_DECK, index_d);
 }
 
-void deck_len(unsigned int index_d, linked_list_t *decks) {
+void deck_len(unsigned int index_d, linked_list_t *decks)
+{
 	if (index_d >= list_get_size(decks)) {
 		printf(DECK_INDEX_OUT_OF_BOUNDS);
 		return;
@@ -96,8 +139,8 @@ void deck_len(unsigned int index_d, linked_list_t *decks) {
 	printf(DECK_LENGTH, index_d, list_get_size(deck));
 }
 
-void del_card(unsigned int index_d, unsigned int index_c,
-								linked_list_t *decks) {
+void del_card(unsigned int index_d, unsigned int index_c, linked_list_t *decks)
+{
 	if (index_d >= list_get_size(decks)) {
 		printf(DECK_INDEX_OUT_OF_BOUNDS);
 		return;
@@ -129,7 +172,8 @@ void del_card(unsigned int index_d, unsigned int index_c,
 		free(node_d);
 	}
 }
-void reverse_deck(unsigned int index_d, linked_list_t *decks) {
+void reverse_deck(unsigned int index_d, linked_list_t *decks)
+{
 	if (index_d >= list_get_size(decks)) {
 		printf(DECK_INDEX_OUT_OF_BOUNDS);
 		return;
@@ -156,8 +200,10 @@ void reverse_deck(unsigned int index_d, linked_list_t *decks) {
 
 	printf(REVERSED, index_d);
 }
+
 void add_cards(unsigned int index_d, unsigned int num_cards,
-									 linked_list_t *decks) {
+			   linked_list_t *decks)
+{
 	unsigned int i = 0;
 	int r, value;
 	char line[BUF_SIZE], *symbol, *number;
@@ -184,6 +230,7 @@ void add_cards(unsigned int index_d, unsigned int num_cards,
 			printf(INVALID_CARD);
 		} else {
 			card_t *my_card = (card_t *)malloc(sizeof(card_t));
+			DIE(!my_card, "malloc failed");
 			my_card->value = value;
 			strcpy(my_card->symbol, symbol);
 
@@ -196,7 +243,8 @@ void add_cards(unsigned int index_d, unsigned int num_cards,
 	printf(ADDED_CARD, index_d);
 }
 void merge_decks(unsigned int index_d1, unsigned int index_d2,
-										 linked_list_t *decks) {
+				 linked_list_t *decks)
+{
 	if (index_d1 >= list_get_size(decks) || index_d2 >= list_get_size(decks)) {
 		printf(DECK_INDEX_OUT_OF_BOUNDS);
 		return;
@@ -241,8 +289,8 @@ void merge_decks(unsigned int index_d1, unsigned int index_d2,
 	list_free(&deck1);
 	free(node_d1);
 
-	node_d2 = list_remove_nth_node(decks, index_d1 > index_d2 ?
-									 index_d2 : index_d2 - 1);
+	node_d2 = list_remove_nth_node(
+		decks, index_d1 > index_d2 ? index_d2 : index_d2 - 1);
 	deck2 = (linked_list_t *)node_d2->data;
 	list_free(&deck2);
 	free(node_d2);
@@ -255,7 +303,8 @@ void merge_decks(unsigned int index_d1, unsigned int index_d2,
 }
 
 void split_deck(unsigned int index_d, unsigned int index_split,
-										 linked_list_t *decks) {
+				linked_list_t *decks)
+{
 	if (index_d >= list_get_size(decks)) {
 		printf(DECK_INDEX_OUT_OF_BOUNDS);
 		return;
@@ -275,7 +324,6 @@ void split_deck(unsigned int index_d, unsigned int index_split,
 		printf(SPLIT, index_d, index_split);
 		return;
 	}
-
 
 	node_t *it = deck->head;
 	linked_list_t *deck1 = list_create(sizeof(card_t));
@@ -345,3 +393,17 @@ void shuffle_deck(unsigned int index_d, linked_list_t *decks)
 	printf(SHUFFLED, index_d);
 }
 
+// parcurg toata lista si eliberez memoria folosita
+// de fiecare nod si apoi memoria folosita de lista
+void free_decks(linked_list_t *decks)
+{
+	while (list_get_size(decks) > 0) {
+		node_t *node_d = list_remove_nth_node(decks, list_get_size(decks) - 1);
+		linked_list_t *deck = (linked_list_t *)node_d->data;
+
+		list_free(&deck);
+		free(node_d);
+	}
+
+	list_free(&decks);
+}
