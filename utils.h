@@ -26,11 +26,11 @@
 
 // pentru comenzi
 #define ADD_D "ADD_DECK"
-#define DEL_D "DEL_DECK"
-#define DEL_C "DEL_CARD"
+#define DEL_D "DELETE_DECK"
+#define DEL_C "DELETE_CARD"
 #define ADD_C "ADD_CARDS"
 #define DECK_NUMBER "DECK_NUMBER"
-#define DECK_LEN "DECK_LEN"
+#define DECK_LEN "DECK_LENGTH"
 #define SHUFFLE "SHUFFLE_DECK"
 #define SHOW_D "SHOW_DECK"
 #define SHOW_ALL "SHOW_ALL"
@@ -59,6 +59,6 @@
 
 int check_card(int value, char symbol[SYM_SIZE]);
 
-int string_to_int(char *str);
+int command_string_to_number(char *command);
 
 #endif  // UTILS_H_

@@ -25,7 +25,7 @@ void add_full_deck(unsigned int num_cards, linked_list_t *decks)
 		fgets(line, BUF_SIZE, in);
 		number = strtok(line, DELIM);
 		// pentru ca fgets returneaza un string il transform in int
-		value = string_to_int(number);
+		value = atoi(number);
 		symbol = strtok(NULL, DELIM);
 
 		r = check_card(value, symbol);
@@ -62,7 +62,7 @@ void add_deck(unsigned int num_cards, linked_list_t *decks)
 		fgets(line, BUF_SIZE, stdin);
 		number = strtok(line, DELIM);
 		// pentru ca fgets returneaza un string il transform in int
-		value = string_to_int(number);
+		value = atoi(number);
 		symbol = strtok(NULL, DELIM);
 
 		r = check_card(value, symbol);
@@ -222,7 +222,7 @@ void add_cards(unsigned int index_d, unsigned int num_cards,
 		// imparte stringul linie in subsiruri spearate de \n
 		number = strtok(line, DELIM);
 		// transforma stringul in int
-		value = string_to_int(number);
+		value = atoi(number);
 		symbol = strtok(NULL, DELIM);
 
 		r = check_card(value, symbol);
@@ -373,7 +373,7 @@ void shuffle_deck(unsigned int index_d, linked_list_t *decks)
 
 	node_t *node_d = list_get_nth_node(decks, index_d);
 	linked_list_t *deck = (linked_list_t *)node_d->data;
-	if (list_get_size(deck) == 1) {
+	if (list_get_size(deck) <= 1) {
 		printf(SHUFFLED, index_d);
 		return;
 	}

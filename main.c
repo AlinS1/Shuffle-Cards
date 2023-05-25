@@ -6,6 +6,8 @@
 #include "linked_list.h"
 #include "utils.h"
 
+
+
 int main(void)
 {
 	char *command, *number, line[BUF_SIZE];
@@ -23,12 +25,15 @@ int main(void)
 		// imparte linia in subsiruri separate de \n si slaveaza rez intr o var
 		command = strtok(line, DELIM);
 		// pentru comanda ADD_D
-		if (strcmp(command, ADD_D) == 0) {
+		int nr_command = command_string_to_number(command);
+
+		switch (nr_command) {
+		case 1:	 // ADD_DECK
 			number = strtok(NULL, DELIM);
 			if (!number)
 				add_full_deck(56, decks);
 			else {
-				num_cards = string_to_int(number);
+				num_cards = atoi(number);
 				// daca e null se apeleaza functia
 				// daca nu se afisaza eroare
 				if (strtok(NULL, DELIM) == NULL) {
@@ -37,116 +42,126 @@ int main(void)
 					printf(INVALID_COMMAND);
 				}
 			}
-		} else if (strcmp(command, DEL_D) == 0) {
+			break;
+		case 2:	 // DELETE_DECK
 			number = strtok(NULL, DELIM);
-			index_d = string_to_int(number);
+			index_d = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				del_deck(index_d, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, DEL_C) == 0) {
+			break;
+		case 3:	 // DELETE_CARD
 			number = strtok(NULL, DELIM);
-			index_d = string_to_int(number);
+			index_d = atoi(number);
 			number = strtok(NULL, DELIM);
-			index_c = string_to_int(number);
+			index_c = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				del_card(index_d, index_c, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, ADD_C) == 0) {
+			break;
+		case 4:	 // ADD_CARD
 			number = strtok(NULL, DELIM);
-			index_d = string_to_int(number);
+			index_d = atoi(number);
 			number = strtok(NULL, DELIM);
-			num_cards = string_to_int(number);
+			num_cards = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				add_cards(index_d, num_cards, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, DECK_NUMBER) == 0) {
+			break;
+		case 5:	 // DECK_NUMBER
 			if (strtok(NULL, DELIM) == NULL) {
 				deck_number(decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, DECK_LEN) == 0) {
+			break;
+		case 6:	 // DECK_LENGTH
 			number = strtok(NULL, DELIM);
-			index_d = string_to_int(number);
+			index_d = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				deck_len(index_d, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, SHUFFLE) == 0) {
+			break;
+		case 7:	 // SHUFFLE_DECK
 			number = strtok(NULL, DELIM);
-			index_d = string_to_int(number);
+			index_d = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				shuffle_deck(index_d, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		}
-
-		else if (strcmp(command, SHOW_D) == 0) {
+			break;
+		case 8:	 // SHOW_DECK
 			number = strtok(NULL, DELIM);
-			index_d = string_to_int(number);
+			index_d = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				show_deck(index_d, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, SHOW_ALL) == 0) {
+			break;
+		case 9:	 // SHOW_ALL
 			if (strtok(NULL, DELIM) == NULL) {
 				show_all(decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, REVERSE_D) == 0) {
+			break;
+		case 10:  // REVERSE_DECK
 			number = strtok(NULL, DELIM);
-			index_d = string_to_int(number);
+			index_d = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				reverse_deck(index_d, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, MERGE_D) == 0) {
+			break;
+		case 11:  // MERGE_DECK
 			number = strtok(NULL, DELIM);
-			index_d1 = string_to_int(number);
+			index_d1 = atoi(number);
 			number = strtok(NULL, DELIM);
-			index_d2 = string_to_int(number);
+			index_d2 = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				merge_decks(index_d1, index_d2, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, SPLIT_D) == 0) {
+			break;
+		case 12:  // SPLIT_DECK
 			number = strtok(NULL, DELIM);
-			index_d = string_to_int(number);
+			index_d = atoi(number);
 			number = strtok(NULL, DELIM);
-			index_split = string_to_int(number);
+			index_split = atoi(number);
 
 			if (strtok(NULL, DELIM) == NULL) {
 				split_deck(index_d, index_split, decks);
 			} else {
 				printf(INVALID_COMMAND);
 			}
-		} else if (strcmp(command, EXIT) == 0) {
+			break;
+		case 13:  // EXIT
 			exit = 1;
-		}
-
-		else {
+			break;
+		default:
 			printf(INVALID_COMMAND);
 		}
+
 	}
 
 	free_decks(decks);
