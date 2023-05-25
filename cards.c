@@ -378,17 +378,24 @@ void shuffle_deck(unsigned int index_d, linked_list_t *decks)
 		return;
 	}
 
-	// iau noul tail, adica ultimul element din prima jumatate
-	node_t *new_tail = list_get_nth_node(deck, list_get_size(deck) / 2 - 1);
-	node_t *new_head = new_tail->next;
+	linked_list_t *new_deck = list_create(sizeof(card_t));
 
-	// schimb legaturile
-	deck->tail->next = deck->head;
-	deck->head->prev = deck->tail;
-	new_head->prev = NULL;
-	new_tail->next = NULL;
-	deck->head = new_head;
-	deck->tail = new_tail;
+	node_t *current_card_node = deck->head;
+	while (current_card_node) {
+		card_t *current_card = (card_t *)current_card_node->data;
+
+		printf("s:%s|v:%d ", current_card->symbol, current_card->value);
+
+		unsigned int idx = rand() % (new_deck->size + 1);
+
+		printf("idx:%d | ", idx);
+
+		list_add_nth_node(new_deck, idx, current_card);
+		current_card_node = current_card_node->next;
+	}
+
+	list_free(&deck);
+	node_d->data = new_deck;
 
 	printf(SHUFFLED, index_d);
 }
