@@ -6,8 +6,6 @@
 #include "linked_list.h"
 #include "utils.h"
 
-
-
 int main(void)
 {
 	char *command, *number, line[BUF_SIZE];
@@ -106,12 +104,16 @@ int main(void)
 			break;
 		case 8:	 // SHOW_DECK
 			number = strtok(NULL, DELIM);
-			index_d = atoi(number);
-
-			if (strtok(NULL, DELIM) == NULL) {
-				show_deck(index_d, decks);
-			} else {
+			if (!number)
 				printf(INVALID_COMMAND);
+			else {
+				index_d = atoi(number);
+
+				if (strtok(NULL, DELIM) == NULL) {
+					show_deck(index_d, decks);
+				} else {
+					printf(INVALID_COMMAND);
+				}
 			}
 			break;
 		case 9:	 // SHOW_ALL
@@ -161,7 +163,6 @@ int main(void)
 		default:
 			printf(INVALID_COMMAND);
 		}
-
 	}
 
 	free_decks(decks);

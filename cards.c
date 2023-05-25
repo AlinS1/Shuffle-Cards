@@ -383,13 +383,7 @@ void shuffle_deck(unsigned int index_d, linked_list_t *decks)
 	node_t *current_card_node = deck->head;
 	while (current_card_node) {
 		card_t *current_card = (card_t *)current_card_node->data;
-
-		printf("s:%s|v:%d ", current_card->symbol, current_card->value);
-
 		unsigned int idx = rand() % (new_deck->size + 1);
-
-		printf("idx:%d | ", idx);
-
 		list_add_nth_node(new_deck, idx, current_card);
 		current_card_node = current_card_node->next;
 	}
